@@ -21,9 +21,6 @@ app.get('/', (req, res) => {
 	res.send('here is a response')
 })
 
-// app.get('/products', (req, res) => {
-// 	res.send({ "name": "namester" })
-// })
 app.get('/get-wishes', (req, res) => {
 	var Wish = mongoose.model("Wish", WishModel);
 
@@ -51,6 +48,20 @@ app.post('/add-wish', (req, res) => {
 		.catch(err => {
 			res.status(400).send("unable to save to database");
 		});
+})
+
+app.put('/update-wish/:id', (req, res) => {
+	var Wish = mongoose.model("Wish", WishModel);
+
+	var query = { _id: req.params.id }
+
+	Wish.update(query, { name: req.body.name })
+		.then(item => {
+			res.send('item updated in database');
+		})
+		.catch(err => {
+			res.status(400).send("unable to update item in database");
+		})
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
