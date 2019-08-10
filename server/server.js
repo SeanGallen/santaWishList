@@ -64,4 +64,18 @@ app.put('/update-wish/:id', (req, res) => {
 		})
 })
 
+app.delete('/delete-wish/:id', (req, res) => {
+	var Wish = mongoose.model("Wish", WishModel);
+
+	var query = {_id: req.params.id }
+
+	Wish.deleteOne(query)
+		.then(item => {
+			res.send('item deleted');
+		})
+		.catch(err => {
+			res.status(400).send("unable to delete item in database");
+		})
+})
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
