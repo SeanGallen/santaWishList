@@ -24,6 +24,20 @@ app.get('/', (req, res) => {
 // app.get('/products', (req, res) => {
 // 	res.send({ "name": "namester" })
 // })
+app.get('/get-wishes', (req, res) => {
+	var Wish = mongoose.model("Wish", WishModel);
+
+	var wishes = Wish.find({}, function(err, items) {
+		if (err) {
+			return res.send();
+		}
+	}).exec(function(err, items) {
+		if (err) {
+			return res.send()
+		}
+		res.send(items)
+	})
+})
 
 app.post('/add-wish', (req, res) => {
 
