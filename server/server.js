@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
 
-var wishModel = new mongoose.Schema({
+var WishModel = new mongoose.Schema({
 	name: String
 });
 
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 
 app.post('/add-wish', (req, res) => {
 
-	var wishModel = mongoose.model("Wish", wishModel);
+	var Wish = mongoose.model("Wish", WishModel);
 
 	var wish = new Wish(req.body);
 	wish.save()
