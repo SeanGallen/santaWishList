@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 // 	res.send({ "name": "namester" })
 // })
 
-app.post('/add-product', (req, res) => {
+app.post('/add-wish', (req, res) => {
 
 	var wishModel = mongoose.model("Wish", wishModel);
 
