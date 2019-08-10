@@ -10,12 +10,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-// mongoose.Promise = global.Promise;
-// mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
 
-// var productSchema = new mongoose.Schema({
-// 	name: String
-// });
+var productSchema = new mongoose.Schema({
+	name: String
+});
 
 app.get('/', (req, res) => {
 	res.send('here is a response')
@@ -25,19 +25,18 @@ app.get('/', (req, res) => {
 // 	res.send({ "name": "namester" })
 // })
 
-// app.post('/add-product', (req, res) => {
+app.post('/add-product', (req, res) => {
 
-// 	var Product = mongoose.model("Product", productSchema);
+	var wishModel = mongoose.model("Wish", wishModel);
 
-// 	var product = new Product(req.body);
-// 	product.save()
-// 		.then(item => {
-// 			console.log(product)
-// 			res.send("item saved to database");
-// 		})
-// 		.catch(err => {
-// 			res.status(400).send("unable to save to database");
-// 		});
-// })
+	var wish = new Wish(req.body);
+	wish.save()
+		.then(item => {
+			res.send("item saved to database");
+		})
+		.catch(err => {
+			res.status(400).send("unable to save to database");
+		});
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
