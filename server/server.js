@@ -14,16 +14,16 @@ mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
 
 var WishModel = new mongoose.Schema({
-	name: String
+	lastName: String,
+	location: String,
+	time: Date,
+	delete: Boolean
 });
 
 app.get('/', (req, res) => {
 	res.send('here is a response')
 })
 
-// app.get('/products', (req, res) => {
-// 	res.send({ "name": "namester" })
-// })
 app.get('/get-wishes', (req, res) => {
 	var Wish = mongoose.model("Wish", WishModel);
 
@@ -53,4 +53,32 @@ app.post('/add-wish', (req, res) => {
 		});
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.put('/update-wish/:id', (req, res) => {
+	var Wish = mongoose.model("Wish", WishModel);
+
+	var query = { _id: req.params.id }
+
+	Wish.update(query, { name: req.body.name })
+		.then(item => {
+			res.send('item updated in database');
+		})
+		.catch(err => {
+			res.status(400).send("unable to update item in database");
+		})
+})
+
+app.delete('/delete-wish/:id', (req, res) => {
+	var Wish = mongoose.model("Wish", WishModel);
+
+	var query = {_id: req.params.id }
+
+	Wish.deleteOne(query)
+		.then(item => {
+			res.send('item deleted from database');
+		})
+		.catch(err => {
+			res.status(400).send("unable to delete item in database");
+		})
+})
+
+app.listen(port, () => console.log(`Listening on port ${port}!`))
